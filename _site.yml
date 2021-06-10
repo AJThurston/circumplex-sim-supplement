@@ -1,0 +1,8 @@
+name: "my-website"
+navbar:
+  title: "Circumplex Dissertation Supplement"
+  left:
+    - text: "Classification Accuracy"
+      href: results.bias.html
+    - text: "Parameter Recovery"
+      href: results.bias.html

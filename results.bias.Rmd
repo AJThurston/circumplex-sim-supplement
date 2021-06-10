@@ -1,0 +1,677 @@
+---
+title: "results.bias"
+author: "AJ Thurston"
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      toc_collapsed: FALSE
+      toc_depth: 3
+---
+
+## Notes
+Parameter estimate bias results for circumplex simulation.  
+
+  * p = theta parameter estimate for common score variable p##
+  * c = cos(p) cosine of theta estimate for corresponding common score variable
+  * s = sin(p) sine of theta estimate for corresponding common score variable
+  * b0  = $\beta$~0~, variance attributable to the general factor
+  * b1  = $\beta$~1~, variance attributable to circumplex structure
+  
+Note, circumplex models generated with values $\beta$~0~ = $\beta$~1~ = .5
+
+  * Estimate Average = Average parameter estimate across 1000 iterations
+  * Estimate SD = Standard Deviation of parameter estimate
+  * Coverage = 90% confidence interval coverage
+  * Average Bias = average bias between generated and estimated parameter
+  * MSE = ![](https://wikimedia.org/api/rest_v1/media/math/render/svg/e258221518869aa1c6561bb75b99476c4734108e) 
+  
+Please direct any questions to [AJ Thurston](mailto:aj@thurston.io)  
+Or reach out to me on [Twitter](https://twitter.com/AJThurston)
+
+```{css, echo=FALSE}
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700,900|Roboto+Slab|Source+Sans+Pro|Lora|Merriweather|Heebo:500,600,800,900');
+
+#TOC {
+    font-family: "Source Sans Pro";
+    font-size: 13px;
+    color: #000000;
+    position: fixed;
+    overflow:right;
+    width: 500px;
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: rgba(221, 237, 234, 1);
+    border-color: rgba(221, 237, 234, 1);
+    font-family: "Source Sans Pro";
+    font-size: 13px;
+    color: #000000;
+}
+
+.title {
+  font-family: "Heebo", sans-serif;
+  font-weight: 900;
+}
+
+.subtitle {
+  font-family: "Lato", sans-serif;
+  color: rgba(0, 0, 0, 0.8);
+  margin: 5 0 0 0;
+}
+
+.author {
+  font-family: "Lato", sans-serif;
+  color: rgba(0, 0, 0, 1);
+  padding-top: 5px;
+}
+
+.date {
+  font-family: "Lato", sans-serif;
+  color: rgba(0, 0, 0, 1);
+}
+
+body {
+  margin-top: 18px;
+  font-family: "Source Sans Pro";
+  font-size: 18px;
+  color: "#393731";
+  line-height: 1;
+}
+
+h2 {
+  font-family: "Heebo", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  padding: 8px 10px 8px 10px;
+  text-align: left;
+  line-height: 34.5px;
+  background-color: rgba(221, 237, 234, 1);
+}
+
+h3 {
+  font-family: "Heebo", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 0px 5px 0px 5px;
+  text-align: left;
+  line-height: 34.5px;
+  border-bottom: .5px solid rgba(0, 0, 0, 0.2);
+}
+
+a {
+  color: rgba(0, 0, 0, 0.8);
+  text-decoration: underline;
+}
+
+a:hover {
+ color: #50a0b0; /* darker color when hovering */
+}
+
+pre[class] {
+  max-height: 300px;
+}
+
+.scroll-300 {
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: inherit;
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE
+)
+library(knitr)
+library(data.table)
+library(kableExtra)
+load("results.bias.Rdata")
+results.bias <- lapply(results.bias, function(x) { x[c("source", "model", "nvar", "n")] <- NULL; x })
+results.bias <- lapply(results.bias, function(x) {setnames(x, old = grep("parm", names(x)), new = "Parameter")})
+results.bias <- lapply(results.bias, function(x) {setnames(x, old = grep("mse", names(x)), new = "MSE")})
+```
+## Circulant Models
+### Circulant, 6 Common Scores, N = 200
+```{r bias.circ_06_0200}
+results.bias$bias.circ_06_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Circulant, 6 Common Scores, N = 500
+```{r bias.circ_06_0500}
+results.bias$bias.circ_06_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Circulant, 6 Common Scores, N = 1000
+```{r bias.circ_06_1000}
+results.bias$bias.circ_06_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Circulant, 12 Common Scores, N = 200
+```{r bias.circ_12_0200}
+results.bias$bias.circ_12_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Circulant, 12 Common Scores, N = 500
+```{r bias.circ_12_0500}
+results.bias$bias.circ_12_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Circulant, 12 Common Scores, N = 1000
+```{r bias.circ_12_1000}
+results.bias$bias.circ_12_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Circulant, 24 Common Scores, N = 200
+```{r bias.circ_24_0200}
+results.bias$bias.circ_24_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Circulant, 24 Common Scores, N = 500
+```{r bias.circ_24_0500}
+results.bias$bias.circ_24_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Circulant, 24 Common Scores, N = 1000
+```{r bias.circ_24_1000}
+results.bias$bias.circ_24_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Circulant, 36 Common Scores, N = 200
+```{r bias.circ_36_0200}
+results.bias$bias.circ_36_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Circulant, 36 Common Scores, N = 500
+```{r bias.circ_36_0500}
+results.bias$bias.circ_36_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Circulant, 36 Common Scores, N = 1000
+```{r bias.circ_36_1000}
+results.bias$bias.circ_36_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+ ## Censored Models
+### Censored, 6 Common Scores, N = 200
+```{r bias.cens_06_0200}
+results.bias$bias.cens_06_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Censored, 6 Common Scores, N = 500
+```{r bias.cens_06_0500}
+results.bias$bias.cens_06_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Censored, 6 Common Scores, N = 1000
+```{r bias.cens_06_1000}
+results.bias$bias.cens_06_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Censored, 12 Common Scores, N = 200
+```{r bias.cens_12_0200}
+results.bias$bias.cens_12_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Censored, 12 Common Scores, N = 500
+```{r bias.cens_12_0500}
+results.bias$bias.cens_12_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Censored, 12 Common Scores, N = 1000
+```{r bias.cens_12_1000}
+results.bias$bias.cens_12_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Censored, 24 Common Scores, N = 200
+```{r bias.cens_24_0200}
+results.bias$bias.cens_24_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Censored, 24 Common Scores, N = 500
+```{r bias.cens_24_0500}
+results.bias$bias.cens_24_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Censored, 24 Common Scores, N = 1000
+```{r bias.cens_24_1000}
+results.bias$bias.cens_24_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Censored, 36 Common Scores, N = 200
+```{r bias.cens_36_0200}
+results.bias$bias.cens_36_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Censored, 36 Common Scores, N = 500
+```{r bias.cens_36_0500}
+results.bias$bias.cens_36_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Censored, 36 Common Scores, N = 1000
+```{r bias.cens_36_1000}
+results.bias$bias.cens_36_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+ ## Clustered Models
+### Clustered, 6 Common Scores, N = 200
+```{r bias.clus_06_0200}
+results.bias$bias.clus_06_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Clustered, 6 Common Scores, N = 500
+```{r bias.clus_06_0500}
+results.bias$bias.clus_06_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Clustered, 6 Common Scores, N = 1000
+```{r bias.clus_06_1000}
+results.bias$bias.clus_06_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Clustered, 12 Common Scores, N = 200
+```{r bias.clus_12_0200}
+results.bias$bias.clus_12_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Clustered, 12 Common Scores, N = 500
+```{r bias.clus_12_0500}
+results.bias$bias.clus_12_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Clustered, 12 Common Scores, N = 1000
+```{r bias.clus_12_1000}
+results.bias$bias.clus_12_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Clustered, 24 Common Scores, N = 200
+```{r bias.clus_24_0200}
+results.bias$bias.clus_24_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Clustered, 24 Common Scores, N = 500
+```{r bias.clus_24_0500}
+results.bias$bias.clus_24_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Clustered, 24 Common Scores, N = 1000
+```{r bias.clus_24_1000}
+results.bias$bias.clus_24_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Clustered, 36 Common Scores, N = 200
+```{r bias.clus_36_0200}
+results.bias$bias.clus_36_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Clustered, 36 Common Scores, N = 500
+```{r bias.clus_36_0500}
+results.bias$bias.clus_36_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Clustered, 36 Common Scores, N = 1000
+```{r bias.clus_36_1000}
+results.bias$bias.clus_36_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+ ## Unidimensional Models
+### Unid., 6 Common Scores, N = 200
+```{r bias.unid_06_0200}
+results.bias$bias.unid_06_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Unid., 6 Common Scores, N = 500
+```{r bias.unid_06_0500}
+results.bias$bias.unid_06_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Unid., 6 Common Scores, N = 1000
+```{r bias.unid_06_1000}
+results.bias$bias.unid_06_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Unid., 12 Common Scores, N = 200
+```{r bias.unid_12_0200}
+results.bias$bias.unid_12_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Unid., 12 Common Scores, N = 500
+```{r bias.unid_12_0500}
+results.bias$bias.unid_12_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Unid., 12 Common Scores, N = 1000
+```{r bias.unid_12_1000}
+results.bias$bias.unid_12_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Unid., 24 Common Scores, N = 200
+```{r bias.unid_24_0200}
+results.bias$bias.unid_24_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Unid., 24 Common Scores, N = 500
+```{r bias.unid_24_0500}
+results.bias$bias.unid_24_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Unid., 24 Common Scores, N = 1000
+```{r bias.unid_24_1000}
+results.bias$bias.unid_24_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Unid., 36 Common Scores, N = 200
+```{r bias.unid_36_0200}
+results.bias$bias.unid_36_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Unid., 36 Common Scores, N = 500
+```{r bias.unid_36_0500}
+results.bias$bias.unid_36_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Unid., 36 Common Scores, N = 1000
+```{r bias.unid_36_1000}
+results.bias$bias.unid_36_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+ ## Higher-Order Models
+### Higher-Order, 6 Common Scores, N = 200
+```{r bias.high_06_0200}
+results.bias$bias.high_06_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Higher-Order, 6 Common Scores, N = 500
+```{r bias.high_06_0500}
+results.bias$bias.high_06_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Higher-Order, 6 Common Scores, N = 1000
+```{r bias.high_06_1000}
+results.bias$bias.high_06_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Higher-Order, 12 Common Scores, N = 200
+```{r bias.high_12_0200}
+results.bias$bias.high_12_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Higher-Order, 12 Common Scores, N = 500
+```{r bias.high_12_0500}
+results.bias$bias.high_12_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Higher-Order, 12 Common Scores, N = 1000
+```{r bias.high_12_1000}
+results.bias$bias.high_12_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Higher-Order, 24 Common Scores, N = 200
+```{r bias.high_24_0200}
+results.bias$bias.high_24_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Higher-Order, 24 Common Scores, N = 500
+```{r bias.high_24_0500}
+results.bias$bias.high_24_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Higher-Order, 24 Common Scores, N = 1000
+```{r bias.high_24_1000}
+results.bias$bias.high_24_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Higher-Order, 36 Common Scores, N = 200
+```{r bias.high_36_0200}
+results.bias$bias.high_36_0200 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Higher-Order, 36 Common Scores, N = 500
+```{r bias.high_36_0500}
+results.bias$bias.high_36_0500 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
+
+### Higher-Order, 36 Common Scores, N = 1000
+```{r bias.high_36_1000}
+results.bias$bias.high_36_1000 %>%
+  kbl(align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T, border_right = T)
+```
+[Back to top](#)
