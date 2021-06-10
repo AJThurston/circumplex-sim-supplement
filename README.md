@@ -1,5 +1,5 @@
 # Dissertation Supplement
-Supplemental code, figures, and tables in support of my circumplex dissertation.
+Supplemental tables and figures in support of my circumplex dissertation.
 
 # To-do
 * Upload parameter recovery figures
