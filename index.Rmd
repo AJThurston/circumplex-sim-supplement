@@ -1,3 +1,10 @@
+---
+title: "Circumplex Dissertation Supplement"
+output:
+  html_document: default
+author: "AJ Thurston"
+---
+
 # Dissertation Supplement
 Supplemental tables and figures in support of my circumplex dissertation.
 
