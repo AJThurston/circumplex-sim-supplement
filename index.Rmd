@@ -6,6 +6,10 @@ author: "AJ Thurston"
 ---
 
 ## Dissertation Supplement
+
+## Heading 2
+### Heading 3
+
 Supplemental tables and figures in support of my circumplex dissertation.
 
 ## To-do
