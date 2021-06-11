@@ -7,3 +7,6 @@ navbar:
       href: results.bias.html
     - text: "Parameter Recovery"
       href: results.bias.html
+output:
+  html_document:
+    css: styles.css
